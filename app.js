@@ -35,7 +35,7 @@ function showTotalBalance(totalDepositOrWithdraw, isTrue) {
     }
     else {
         const newTotalBlance = getTotalBalance - totalDepositOrWithdraw;
-        if (newTotalBlance >= 0) {
+        if (newTotalBlance > 0) {
             TotalBalanceField.innerText = newTotalBlance;
         }
     }
@@ -56,9 +56,9 @@ document.getElementById('withdraw-button').addEventListener('click', function ()
     // console.log('wit', getWithdrawInput)
 
     let currentMoney = currentBalance();
-    console.log(currentMoney);
+    //console.log(currentMoney);
     if (getWithdrawInput < currentMoney) {
         getDepositOrWithdraw('withdraw-total', getWithdrawInput); // get previous withdraw value & add new value
+        showTotalBalance(getWithdrawInput, false)
     }
-    showTotalBalance(getWithdrawInput, false)
 })
