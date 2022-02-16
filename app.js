@@ -13,6 +13,15 @@ function getDepositOrWithdraw(totalID, getDepositInputOrWithdrawInput) {
     setTotalDepositOrWithdraw.innerText = addTotalDepositOrWithdraw;
 }
 
+//current balance
+
+function currentBalance() {
+    let TotalBalanceField = document.getElementById('balance-total');
+    const getTotalBalance = parseFloat(TotalBalanceField.innerText);
+    return getTotalBalance;
+}
+
+
 // Total balance
 
 function showTotalBalance(totalDepositOrWithdraw, isTrue) {
@@ -26,17 +35,18 @@ function showTotalBalance(totalDepositOrWithdraw, isTrue) {
     }
     else {
         const newTotalBlance = getTotalBalance - totalDepositOrWithdraw;
-        TotalBalanceField.innerText = newTotalBlance;
+        if (newTotalBlance >= 0) {
+            TotalBalanceField.innerText = newTotalBlance;
+        }
     }
 
 }
 
 //deposit 
-
 document.getElementById('deposit-button').addEventListener('click', function () {
-    let getDepositInput = getInputValue('deposit-input');
+    let getDepositInput = getInputValue('deposit-input');  // for get value from input field
     //console.log('dep', getDepositInput)
-    getDepositOrWithdraw('deposit-total', getDepositInput);
+    getDepositOrWithdraw('deposit-total', getDepositInput); // get previous deposit value & add new value
     showTotalBalance(getDepositInput, true)
 })
 
@@ -44,6 +54,11 @@ document.getElementById('deposit-button').addEventListener('click', function () 
 document.getElementById('withdraw-button').addEventListener('click', function () {
     let getWithdrawInput = getInputValue('withdraw-input')
     // console.log('wit', getWithdrawInput)
-    getDepositOrWithdraw('withdraw-total', getWithdrawInput);
+
+    let currentMoney = currentBalance();
+    console.log(currentMoney);
+    if (getWithdrawInput < currentMoney) {
+        getDepositOrWithdraw('withdraw-total', getWithdrawInput); // get previous withdraw value & add new value
+    }
     showTotalBalance(getWithdrawInput, false)
 })
